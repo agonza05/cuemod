@@ -8,3 +8,4 @@ Cue Modules
 
 - [Terragrunt config](terraform/terragrunt)
 - [Cloud regions data](datasource/cloudregions)
+- [Utilities](datasource/utils)
