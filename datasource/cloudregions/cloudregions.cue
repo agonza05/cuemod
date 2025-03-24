@@ -74,3 +74,20 @@ region: {
 		oci: {displayName: "Australia East (Sydney)", name: "ap-sydney-1"}
 	}
 }
+
+#RegionCodes: [ID=string]: {
+	name!:               string
+	description?:        string
+	cloudProvider:       or(cloudProviderObjectKeys)
+	location:            location[location].id
+	cloudProviderRegion: region[location][cloudProvider]
+	id:                  ID
+}
+
+#CloudRegion: [or(locationObjectKeys)]: [or(cloudProviderObjectKeys)]: {
+	displayName!: string
+	name:         name
+	id:           name
+}
+
+region: #CloudRegion

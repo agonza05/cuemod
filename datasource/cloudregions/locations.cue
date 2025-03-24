@@ -1,22 +1,5 @@
 package cloudregions
 
-country: {
-	de: name: "Germany"
-	us: name: "United States"
-	uk: name: "United Kingdom"
-	ie: name: "Ireland"
-	nl: name: "Netherlands"
-	fi: name: "Finland"
-	se: name: "Sweden"
-	no: name: "Norway"
-	it: name: "Italy"
-	fr: name: "France"
-	br: name: "Brazil"
-	nz: name: "New Zealand"
-	au: name: "Australia"
-	cl: name: "Chile"
-}
-
 location: {
 	fra: {name: "Frankfurt", countryCode: "de"}
 	ber: {name: "Berlin", countryCode: "de"}
@@ -36,9 +19,28 @@ location: {
 	scl: {name: "Santiago", countryCode: "cl"}
 }
 
-cloudProvider: {
-	gcp: name: "Google Cloud Platform"
-	azr: name: "Microsoft Azure"
-	aws: name: "Amazon Web Services"
-	oci: name: "Oracle Cloud Infrastructure"
+locationObjectKeys: [for k, v in location {k}]
+
+#Location: [ID=#ThreeLetterCode]: {
+	name!:       string
+	countryCode: or(contryObjectKeys)
+	countryName: country[countryCode].name
+	id:          ID
+	cloudRegion: {...}
+}
+
+location: #Location
+
+for k, v in region {
+	location: "\(k)": cloudRegion: v
+	let _loc = location
+	for x, y in v {
+		cloudProvider: "\(x)": location: "\(k)": {
+			name:        _loc[k].name
+			countryCode: _loc[k].countryCode
+			countryName: _loc[k].countryName
+			id:          _loc[k].id
+			cloudRegion: y
+		}
+	}
 }
