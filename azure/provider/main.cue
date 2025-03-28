@@ -1,5 +1,3 @@
 package provider
 
-provider: azurerm: {
-	features: {}
-}
+provider: azurerm: features: {}
