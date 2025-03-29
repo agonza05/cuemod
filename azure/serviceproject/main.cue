@@ -13,22 +13,22 @@ locals: {...}
 provider
 
 if list.Contains(locals.enableService, "vpn") {
-	let inputs = locals
-	_reosurce: vpn
-	_reosurce: locals: inputs
-	resource: _reosurce.resource
+	_inputs:   locals
+	_resource: vpn
+	_resource: locals: _inputs
+	resource: _resource.resource
 }
 
 if list.Contains(locals.enableService, "compute") {
-	let inputs = locals
-	_reosurce: compute
-	_reosurce: locals: inputs
-	resource: _reosurce.resource
+	_inputs:   locals
+	_resource: compute
+	_resource: locals: _inputs
+	resource: _resource.resource
 }
 
 if list.Contains(locals.enableService, "environments") {
-	let inputs = locals
-	_reosurce: projectenvironments
-	_reosurce: locals: inputs
-	resource: _reosurce.resource
+	_inputs:   locals
+	_resource: projectenvironments
+	_resource: locals: _inputs
+	resource: _resource.resource
 }

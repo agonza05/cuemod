@@ -21,4 +21,10 @@ resource: {
 		location:            "${azurerm_resource_group.\(_resourceId).location}"
 		address_space: [locals.vpnSubnet + locals.vpnSubnetCIDR]
 	}
+	azurerm_subnet: "\(_resourceId)": {
+		name:                 "GatewaySubnet"
+		resource_group_name:  "${azurerm_resource_group.\(_resourceId).name}"
+		virtual_network_name: "${azurerm_virtual_network.\(_resourceId).name}"
+		address_prefixes: [locals.vpnSubnet + locals.vpnSubnetCIDR]
+	}
 }
