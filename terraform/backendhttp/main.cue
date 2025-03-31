@@ -9,6 +9,7 @@ locals: {
 	tfStateName: string | *"\(utils.prefix.terraform.stateFile)-\(workspaceId)"
 	// "https://gitlab.com/api/v4/projects/55066401/terraform/state/"
 	tfStateAddress: string
+	...
 }
 
 terraform: backend: http: {
