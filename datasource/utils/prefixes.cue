@@ -27,3 +27,5 @@ prefix: cloud: {
 	secret:     "pass"
 	vm:         "vm"
 }
+
+prefix: terraform: stateFile: "tfstate"
