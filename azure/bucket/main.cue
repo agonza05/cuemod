@@ -1,13 +1,14 @@
 package bucket
 
 import (
+	"strings"
 	utils "github.com/agonza05/cuemod/datasource/utils"
 )
 
 locals: {
 	storageTier:  string | *"Standard"
 	storageType:  string | *"LRS"
-	accessTier:   string | *"cool"
+	accessTier:   string | *"Cool"
 	accessType:   string | *"private"
 	publicAccess: bool | *false
 }
@@ -20,7 +21,8 @@ resource: {
 		location: locals.regionId
 	}
 	azurerm_storage_account: "\(_resourceId)": {
-		name:                          utils.prefix.cloud.bucket + "-" + _resourceId
+		_name:                         utils.prefix.cloud.bucket + "-" + _resourceId
+		name:                          strings.Join(strings.Split(_name, "-"), "")
 		resource_group_name:           "${azurerm_resource_group.\(_resourceId).name}"
 		location:                      "${azurerm_resource_group.\(_resourceId).location}"
 		account_tier:                  locals.storageTier
