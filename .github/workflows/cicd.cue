@@ -24,9 +24,8 @@ workflows: publish: {
 	name: "Publish CUE module"
 	on: push: tags: ["*"]
 	env: {
-		REGISTRY:     "ghcr.io"
-		IMAGE_NAME:   "${{ github.repository }}"
-		CUE_REGISTRY: "${{ env.REGISTRY }}"
+		REGISTRY:   "ghcr.io"
+		IMAGE_NAME: "${{ github.repository }}"
 	}
 
 	jobs: publish: {
@@ -45,7 +44,7 @@ workflows: publish: {
 				username: "${{ github.actor }}"
 				password: "${{ secrets.GITHUB_TOKEN }}"
 			}},
-			{run: "cue mod publish ${{ github.ref_name }}"},
+			{run: "cue mod publish ${{ github.ref_name }}", env: CUE_REGISTRY: "${{ env.REGISTRY }}"},
 		]
 	}
 }
