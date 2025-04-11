@@ -22,7 +22,7 @@ workflows: tags: {
 
 workflows: publish: {
 	name: "Publish CUE module"
-	on: push: tags: ["*"]
+	on: create: tags: ["*"]
 	env: {
 		REGISTRY:   "ghcr.io"
 		IMAGE_NAME: "${{ github.repository }}"

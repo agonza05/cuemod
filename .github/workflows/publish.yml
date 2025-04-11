@@ -1,6 +1,6 @@
 name: Publish CUE module
 "on":
-  push:
+  create:
     tags:
       - '*'
 env:
