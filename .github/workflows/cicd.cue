@@ -2,27 +2,9 @@ package cicd
 
 // import "cue.dev/x/githubactions"
 
-// workflows: example: githubactions.#Workflow & {
-workflows: tags: {
-	name: "Create git tag"
-	on: push: branches: ["main"]
-
-	jobs: "create-git-tag": {
-		"runs-on": "ubuntu-latest"
-		permissions: contents: "write"
-		steps: [
-			{uses: "actions/checkout@v4", with: "fetch-depth": "0"},
-			{uses: "anothrNick/github-tag-action@v1", env: {
-				GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-				WITH_V:       true
-			}},
-		]
-	}
-}
-
 workflows: publish: {
 	name: "Publish CUE module"
-	on: create: tags: ["*"]
+	on: push: branches: ["main"]
 	env: {
 		REGISTRY:   "ghcr.io"
 		IMAGE_NAME: "${{ github.repository }}"
@@ -37,14 +19,18 @@ workflows: publish: {
 			"id-token":   "write"
 		}
 		steps: [
-			{uses: "actions/checkout@v4"},
+			{uses: "actions/checkout@v4", with: "fetch-depth": "0"},
+			{uses: "anothrNick/github-tag-action@v1", id: "gittag", env: {
+				GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+				WITH_V:       true
+			}},
 			{uses: "cue-lang/setup-cue@v1.0.1"},
 			{uses: "docker/login-action@v3.4.0", with: {
 				registry: "${{ env.REGISTRY }}"
 				username: "${{ github.actor }}"
 				password: "${{ secrets.GITHUB_TOKEN }}"
 			}},
-			{run: "cue mod publish ${{ github.ref_name }}", env: CUE_REGISTRY: "${{ env.REGISTRY }}"},
+			{run: "cue mod publish ${{ steps.gittag.outputs.new_tag }}", env: CUE_REGISTRY: "${{ env.REGISTRY }}"},
 		]
 	}
 }
