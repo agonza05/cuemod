@@ -5,3 +5,9 @@ language: {
 source: {
 	kind: "git"
 }
+deps: {
+	"cue.dev/x/gitlab@v0": {
+		v:       "v0.0.0"
+		default: true
+	}
+}

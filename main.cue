@@ -6,6 +6,7 @@ import (
 	"github.com/agonza05/cuemod/datasource/cloudregions"
 	"github.com/agonza05/cuemod/datasource/utils"
 	"github.com/agonza05/cuemod/cloud/serviceproject"
+	gitlabCommon "github.com/agonza05/cuemod/gitlab/common"
 )
 
 #Utils:          utils
@@ -13,3 +14,4 @@ import (
 #TFBackendHttp:  backendhttp
 #CloudRegions:   cloudregions
 #ServiceProject: serviceproject
+#GitLabCommon:   gitlabCommon
